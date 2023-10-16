@@ -36,6 +36,6 @@
     "tcp/ip"
   ],
   "dependencies": {
-    "risco-lan-bridge": "^0.10.1"
+    "risco-lan-bridge": "^0.10.6"
   }
 }
