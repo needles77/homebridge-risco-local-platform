@@ -122,6 +122,10 @@ class RiscoLanPlatform {
                 this.log.info('Initialising LightSys Panel');
                 this.RiscoPanel = new RiscoTCPPanel.LightSys(this.PanelOptions);
                 break;
+            case 'lightsysplus': // Add by @Needles77
+                this.log.info('Initialising LightSysPlus Panel');
+                this.RiscoPanel = new RiscoTCPPanel.LightSysPlus(this.PanelOptions);
+                break;
             case 'prosysplus':
                 this.log.info('Initialising ProSysPlus Panel');
                 this.RiscoPanel = new RiscoTCPPanel.ProsysPlus(this.PanelOptions);
@@ -199,13 +203,16 @@ class RiscoLanPlatform {
             this.log.info('PreConf Phase Ended');
 
             this.log.info('Create Accessory Phase Started');
+       
             try {
                 if (Object.keys(this.DiscoveredAccessories).length != 0) {
+                    this.log.debug(`@Needles77 Debug 1 :\n ${Object.keys(this.DiscoveredAccessories).length}`);
                     if (this.hasCachedAccessory) {
                         await new Promise(r => setTimeout(r, 5000));
                     }
                     for (var DiscoveredAcc in this.Devices) {
                         if ( this.Devices[DiscoveredAcc].context !== undefined ) {
+                            this.log.debug(`@Needles77 Debug 1,1 :\n ${this.Devices[DiscoveredAcc].name}`);
                             this.addAccessory(this.Devices[DiscoveredAcc]);
                         }
                     }
@@ -214,6 +221,8 @@ class RiscoLanPlatform {
             } catch (err) {
                 this.log.error(`Error on Create Accessory Phase :\n ${err}`);
             }
+
+            
             this.log.info('Accessories Init Phase Ended');
 
             // Prune Unused accessories
@@ -254,14 +263,19 @@ class RiscoLanPlatform {
     }
 
     addAccessory(DiscoveredAcc) {
+        //this.log.error(`@Needles77 Debug 2 :\n ${DiscoveredAcc}`);
         let uuid = UUIDGen.generate(DiscoveredAcc.context.longName);
+        //this.log.error(`@Needles77 Debug 3 :\n ${DiscoveredAcc.context.longName}`);
         let accessory = new this.api.platformAccessory(DiscoveredAcc.context.name, uuid);
+       // this.log.error(`@Needles77 Debug 4 :\n ${DiscoveredAcc.context.longName}`);
         accessory.context = DiscoveredAcc.context;
         if ((this.accessories.filter(device => (device.UUID == uuid))).length == 0) {
+            //this.log.error(`@Needles77 Debug 5 :\n ${DiscoveredAcc.context.longName}`);
             this.log.info(`Adding new accessory with Name: ${DiscoveredAcc.context.name}, Id: ${DiscoveredAcc.context.Id}, type: ${DiscoveredAcc.context.accessorytype}`);
             this._addOrConfigure(accessory, DiscoveredAcc, DiscoveredAcc.context.accessorytype, true);
             this.accessories.push(accessory);
             this.api.registerPlatformAccessories(pluginName, platformName, [accessory]);
+            //this.log.error(`@Needles77 Debug 6 :\n ${DiscoveredAcc.context.longName}`);
         }
     }
 
