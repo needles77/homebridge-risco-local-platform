@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.4 (2023-16-10)
+* Add LightSysPlus Panel and update 'risco-lan-bridge' too
+
 ## 0.1.3 (2021-14-10)
 * Fix Error on launch with Custom Device (related to issue #2)
 * Update dependencie version for 'risco-lan-bridge'
