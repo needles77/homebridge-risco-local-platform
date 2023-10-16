@@ -36,6 +36,6 @@
     "tcp/ip"
   ],
   "dependencies": {
-    "risco-lan-bridge": "^0.10.6"
+    "risco-lan-bridge": "https://github.com/needles77/homebridge-risco-local-platform.git"
   }
 }
